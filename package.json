@@ -21,6 +21,9 @@
     "url": "https://github.com/fiadone/vite-plugin-twig/issues"
   },
   "homepage": "https://github.com/fiadone/vite-plugin-twig#readme",
+  "publishConfig": {
+    "access": "public"
+  },
   "devDependencies": {
     "twig": "^1.15.4"
   },
