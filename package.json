@@ -1,6 +1,6 @@
 {
   "name": "@fiad/vite-plugin-twig",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "license": "MIT",
   "keywords": [
     "vite-plugin",
@@ -24,7 +24,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "devDependencies": {
+  "dependencies": {
     "twig": "^1.15.4"
   },
   "peerDependencies": {
