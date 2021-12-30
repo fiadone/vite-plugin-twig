@@ -1,0 +1,30 @@
+{
+  "name": "@fiad/vite-plugin-twig",
+  "version": "0.0.1",
+  "license": "MIT",
+  "keywords": [
+    "vite-plugin",
+    "twig"
+  ],
+  "author": "Andrea \"Fiad\" Fiadone",
+  "files": [
+    "index.js",
+    "index.d.ts"
+  ],
+  "main": "index.js",
+  "types": "index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fiadone/vite-plugin-twig.git"
+  },
+  "bugs": {
+    "url": "https://github.com/fiadone/vite-plugin-twig/issues"
+  },
+  "homepage": "https://github.com/fiadone/vite-plugin-twig#readme",
+  "devDependencies": {
+    "twig": "^1.15.4"
+  },
+  "peerDependencies": {
+    "vite": "^2.0.0"
+  }
+}
