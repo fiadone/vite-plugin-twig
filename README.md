@@ -26,7 +26,7 @@ export default {
 An options object can also be passed as argument with the properties listed here below.
 
 #### `filters`
-__type__ `{ [key: string]: Function }`
+__type__ `{ [key: string]: (...args: any[]) => any }`
 
 __default__ `{}`
 
@@ -34,7 +34,7 @@ A collection of custom filters to extend *Twig*. Look at [*twig.js* documentatio
 
 
 #### `functions`
-__type__ `{ [key: string]: Function }`
+__type__ `{ [key: string]: (...args: any[]) => any }`
 
 __default__ `{}`
 
@@ -54,12 +54,14 @@ More in details, a *html* file should look like this:
 
 ```html
 <!-- index.html -->
-{
-  "template": "path/to/template.twig",
-  "data": {
-    "title": "Homepage"
+<script type="application/json">
+  {
+    "template": "path/to/template.twig",
+    "data": {
+      "title": "Homepage"
+    }
   }
-}
+</script>
 ```
 
 where `template` is the path of the *twig* template to be rendered (relative to the *cwd*), and `data` is the local context for that page (eventually merged with the *globals* provided via plugin options).

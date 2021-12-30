@@ -23,10 +23,10 @@ function viteTwigPlugin({
     name: 'vite-plugin-twig',
     transformIndexHtml: {
       enforce: 'pre',
-      transform(raw) {
+      transform(content) {
         try {
-          const content = raw.replace(/<!--[^>]*-->/gm, '').trim()
-          const { template, data } = JSON.parse(content)
+          const [_, specs] = content.match(/<script\b[^>]*>([\s\S]+)<\/script>/) || []
+          const { template, data } = JSON.parse(specs || content)
           const filepath = path.resolve(cwd, template)
           const context = { ...globals, ...data }
 
@@ -42,7 +42,7 @@ function viteTwigPlugin({
         } catch (err) {
           console.warn(err)
 
-          return Promise.resolve(raw)
+          return Promise.resolve(content)
         }
       }
     },
