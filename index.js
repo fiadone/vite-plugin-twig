@@ -1,53 +1,28 @@
 // @ts-check
-const path = require('path')
-const process = require('process')
-const Twig = require('twig')
+const { extname } = require('path')
+const { configureTwig, parseHTML, renderTemplate } = require('./tasks')
 
 /**
  * @param {import('.').Options} options
  * @returns {import('vite').Plugin}
  */
-function viteTwigPlugin({
-  filters = {},
-  functions = {},
-  globals = {},
-} = {}) {
-  const cwd = process.cwd()
+function viteTwigPlugin({ filters = {}, functions = {}, globals = {} } = {}) {
 
-  Twig.cache(false)
-
-  Object.entries(filters).forEach(([key, fn]) => Twig.extendFilter(key, fn))
-  Object.entries(functions).forEach(([key, fn]) => Twig.extendFunction(key, fn))
+  configureTwig(filters, functions)
 
   return {
     name: 'vite-plugin-twig',
     transformIndexHtml: {
       enforce: 'pre',
-      transform(content) {
-        try {
-          const [_, specs] = content.match(/<script\b[^>]*>([\s\S]+)<\/script>/) || []
-          const { template, data } = JSON.parse(specs || content)
-          const filepath = path.resolve(cwd, template)
-          const context = { ...globals, ...data }
-
-          return new Promise((resolve, reject) => {
-            Twig.renderFile(filepath, context, (err, html) => {
-              if (err) {
-                reject(err)
-              } else {
-                resolve(html)
-              }
-            })
-          })
-        } catch (err) {
-          console.warn(err)
-
-          return Promise.resolve(content)
-        }
+      async transform(content) {
+        const { template, data } = parseHTML(content)
+        return template
+          ? await renderTemplate(template, { ...globals, ...data })
+          : content
       }
     },
     handleHotUpdate({ file, server }) {
-      if (path.extname(file) === '.twig') {
+      if (extname(file) === '.twig') {
         server.ws.send({ type: 'full-reload' })
       }
     }

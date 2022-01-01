@@ -1,0 +1,52 @@
+const process = require('process')
+const path = require('path')
+const Twig = require('twig')
+
+/**
+ * It handles Twig configuration and extension
+ * @param {object} functions 
+ * @param {object} filters 
+ */
+function configureTwig(functions = {}, filters = {}) {
+  Twig.cache(false)
+  Object.entries(filters).forEach(([key, fn]) => Twig.extendFilter(key, fn))
+  Object.entries(functions).forEach(([key, fn]) => Twig.extendFunction(key, fn))
+}
+
+/**
+ * It handles the original html content parsing in order to retrieve the template details
+ * @param {string} content 
+ * @returns {object}
+ */
+function parseHTML(content) {
+  try {
+    const [_, specs] = content.match(/<script\b[^>]*>([\s\S]+)<\/script>/) || []
+    const { template, data } = JSON.parse(specs || content)
+    return { template: path.resolve(process.cwd(), template), data }
+  } catch (err) {
+    console.warn(err)
+    return {}
+  }
+}
+
+/**
+ * It handles the conversion from twig to html
+ * @param {string} template The twig template filepath
+ * @param {object} context The data to be injected in the template
+ * @returns {Promise}
+ */
+function renderTemplate(template, context) {
+  return new Promise((resolve, reject) => {
+    Twig.renderFile(template, context, (err, html) => {
+      if (err) {
+        reject(err)
+      } else {
+        resolve(html)
+      }
+    })
+  })
+}
+
+module.exports.configureTwig = configureTwig
+module.exports.parseHTML = parseHTML
+module.exports.renderTemplate = renderTemplate
