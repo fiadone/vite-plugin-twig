@@ -1,17 +1,12 @@
 {
   "name": "vite-plugin-twig",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "license": "MIT",
   "keywords": [
     "vite-plugin",
     "twig"
   ],
   "author": "Andrea \"Fiad\" Fiadone",
-  "files": [
-    "index.js",
-    "index.d.ts",
-    "tasks.js"
-  ],
   "main": "index.js",
   "types": "index.d.ts",
   "repository": {

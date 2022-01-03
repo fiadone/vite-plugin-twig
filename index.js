@@ -1,12 +1,19 @@
 // @ts-check
 const { extname } = require('path')
-const { configureTwig, parseHTML, renderTemplate } = require('./tasks')
+const { retrieveOptions, configureTwig, parseHTML, renderTemplate } = require('./tasks')
 
 /**
  * @param {import('.').Options} options
  * @returns {import('vite').Plugin}
  */
-function viteTwigPlugin({ filters = {}, functions = {}, globals = {}, settings = {} } = {}) {
+function viteTwigPlugin(options) {
+
+  const {
+    filters = {},
+    functions = {},
+    globals = {},
+    settings = {}
+  } = options || retrieveOptions()
 
   configureTwig({ filters, functions })
 

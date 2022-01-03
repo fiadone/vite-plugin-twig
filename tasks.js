@@ -3,6 +3,20 @@ const path = require('path')
 const Twig = require('twig')
 
 /**
+ * Retrieves options from the configuration file
+ * @returns {object}
+ */
+ function retrieveOptions() {
+  try {
+    const config = path.resolve(process.cwd(), 'twig.config.js')
+    return require(config)
+  } catch (err) {
+    return {}
+  }
+}
+
+
+/**
  * It handles Twig configuration and extension
  * @param {object} extensions
  */
@@ -47,6 +61,7 @@ function renderTemplate(template, context, settings) {
   })
 }
 
+module.exports.retrieveOptions = retrieveOptions
 module.exports.configureTwig = configureTwig
 module.exports.parseHTML = parseHTML
 module.exports.renderTemplate = renderTemplate

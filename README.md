@@ -24,7 +24,9 @@ export default {
 ```
 
 ### Options
-An options object can also be passed as argument with the properties listed here below.
+The plugin can be configured both via the *twig.config.js* file from the project root or by passing a configuration object directly as argument to the function above (in this last case, the configuration file will be ignored).
+
+Here below the list of the supported options.
 
 #### `filters`
 __type__ `{ [key: string]: (...args: any[]) => any }`
@@ -32,7 +34,6 @@ __type__ `{ [key: string]: (...args: any[]) => any }`
 __default__ `{}`
 
 A collection of custom filters to extend *Twig*. Look at [*twig.js* documentation](https://github.com/twigjs/twig.js/wiki/Extending-twig.js) to learn more.
-
 
 #### `functions`
 __type__ `{ [key: string]: (...args: any[]) => any }`
@@ -74,3 +75,5 @@ More in details, a *html* file should look like this:
 ```
 
 where `template` is the path of the *twig* template to be rendered (relative to the *cwd*), and `data` is the local context for that page (eventually merged with the *globals* provided via plugin options).
+
+> ℹ️ The *script* tag is not mandatory, since a plain text representation of the *json* will be correctly parsed too. However, it is recommended for readability and syntax highlighting purposes.
