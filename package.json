@@ -1,6 +1,6 @@
 {
-  "name": "@fiad/vite-plugin-twig",
-  "version": "0.0.7",
+  "name": "vite-plugin-twig",
+  "version": "1.0.0",
   "license": "MIT",
   "keywords": [
     "vite-plugin",

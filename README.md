@@ -1,12 +1,12 @@
-# @fiad/vite-plugin-twig
+# vite-plugin-twig
 
-A simple *[Vite](https://vitejs.dev/guide/api-plugin.html)* plugin for *[Twig](https://twig.symfony.com/doc/3.x/)* template engine usage (based on *[twig.js](https://github.com/twigjs/twig.js/)*).
+[Vite](https://github.com/vitejs/vite) plugin for [Twig](https://github.com/twigjs/twig.js/).
 
 ---
 
 ## Installation
 ```
-npm i -D @fiad/vite-plugin-twig
+npm i -D vite-plugin-twig
 ```
 
 
@@ -14,7 +14,7 @@ npm i -D @fiad/vite-plugin-twig
 
 ```js
 /* vite.config.js */
-import twig from '@fiad/vite-plugin-twig'
+import twig from 'vite-plugin-twig'
 
 export default {
   plugins: [
@@ -46,7 +46,7 @@ __type__ `{ [key: string]: any }`
 
 __default__ `{}`
 
-The global data to be injected in each template.
+The global variables to be injected in each template.
 
 #### `settings`
 __type__ `{ [key: string]: any }`
