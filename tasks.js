@@ -4,10 +4,9 @@ const Twig = require('twig')
 
 /**
  * It handles Twig configuration and extension
- * @param {object} functions 
- * @param {object} filters 
+ * @param {object} extensions
  */
-function configureTwig(functions = {}, filters = {}) {
+function configureTwig({ functions = {}, filters = {} } = {}) {
   Twig.cache(false)
   Object.entries(filters).forEach(([key, fn]) => Twig.extendFilter(key, fn))
   Object.entries(functions).forEach(([key, fn]) => Twig.extendFunction(key, fn))

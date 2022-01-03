@@ -8,7 +8,7 @@ const { configureTwig, parseHTML, renderTemplate } = require('./tasks')
  */
 function viteTwigPlugin({ filters = {}, functions = {}, globals = {}, settings = {} } = {}) {
 
-  configureTwig(filters, functions)
+  configureTwig({ filters, functions })
 
   return {
     name: 'vite-plugin-twig',
