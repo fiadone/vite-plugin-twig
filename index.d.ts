@@ -13,6 +13,10 @@ export interface Options {
    * default: {}
    */
   globals?: { [key: string]: any }
+  /**
+   * default: {}
+   */
+   settings?: { [key: string]: any }
 }
 
 declare function viteTwigPlugin(options?: Options): Plugin

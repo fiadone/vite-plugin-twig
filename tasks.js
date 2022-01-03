@@ -33,11 +33,12 @@ function parseHTML(content) {
  * It handles the conversion from twig to html
  * @param {string} template The twig template filepath
  * @param {object} context The data to be injected in the template
+ * @param {object} settings The twig settings
  * @returns {Promise}
  */
-function renderTemplate(template, context) {
+function renderTemplate(template, context, settings) {
   return new Promise((resolve, reject) => {
-    Twig.renderFile(template, context, (err, html) => {
+    Twig.renderFile(template, { ...context, settings }, (err, html) => {
       if (err) {
         reject(err)
       } else {

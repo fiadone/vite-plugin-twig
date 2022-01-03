@@ -6,7 +6,7 @@ const { configureTwig, parseHTML, renderTemplate } = require('./tasks')
  * @param {import('.').Options} options
  * @returns {import('vite').Plugin}
  */
-function viteTwigPlugin({ filters = {}, functions = {}, globals = {} } = {}) {
+function viteTwigPlugin({ filters = {}, functions = {}, globals = {}, settings = {} } = {}) {
 
   configureTwig(filters, functions)
 
@@ -17,7 +17,7 @@ function viteTwigPlugin({ filters = {}, functions = {}, globals = {} } = {}) {
       async transform(content) {
         const { template, data } = parseHTML(content)
         return template
-          ? await renderTemplate(template, { ...globals, ...data })
+          ? await renderTemplate(template, { ...globals, ...data }, settings)
           : content
       }
     },
