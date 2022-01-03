@@ -9,6 +9,7 @@ A simple *[Vite](https://vitejs.dev/guide/api-plugin.html)* plugin for *[Twig](h
 npm i -D @fiad/vite-plugin-twig
 ```
 
+
 ## Usage
 
 ```js
@@ -46,6 +47,14 @@ __type__ `{ [key: string]: any }`
 __default__ `{}`
 
 The global data to be injected in each template.
+
+#### `settings`
+__type__ `{ [key: string]: any }`
+
+__default__ `{}`
+
+The *Twig* settings. Please refer to [*twig.js* documentation](https://github.com/twigjs/twig.js/wiki/) to learn more.
+
 
 ### Templates
 The *html* files located by default in the *Vite* project root are not intented to be replaced directly by the *twig* ones as the normal page files resolution/linking on the *Vite*'s dev server is wanted to be preserved along with the build logic. However, those files are supposed to contain a json definition instead of the traditional markup, which should be moved on the *twig* side.
