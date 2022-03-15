@@ -29,13 +29,14 @@ function configureTwig({ functions = {}, filters = {} } = {}) {
 /**
  * It handles the original html content parsing in order to retrieve the template details
  * @param {string} content 
+ * @param {string} basePath 
  * @returns {object}
  */
-function parseHTML(content) {
+function parseHTML(content, basePath = '') {
   try {
     const [_, specs] = content.match(/<script\b[^>]*>([\s\S]+)<\/script>/) || []
     const { template, data } = JSON.parse(specs || content)
-    return { template: path.resolve(process.cwd(), template), data }
+    return { template: path.join(process.cwd(), basePath, template), data }
   } catch (err) {
     console.warn(err)
     return {}

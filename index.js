@@ -22,7 +22,7 @@ function viteTwigPlugin(options) {
     transformIndexHtml: {
       enforce: 'pre',
       async transform(content) {
-        const { template, data } = parseHTML(content)
+        const { template, data } = parseHTML(content, settings.views)
         return template
           ? await renderTemplate(template, { ...globals, ...data }, settings)
           : content
