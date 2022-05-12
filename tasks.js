@@ -6,7 +6,7 @@ const Twig = require('twig')
  * Retrieves options from the configuration file
  * @returns {object}
  */
- function retrieveOptions() {
+function retrieveOptions() {
   try {
     const config = path.resolve(process.cwd(), 'twig.config.js')
     return require(config)
@@ -20,7 +20,7 @@ const Twig = require('twig')
  * It handles Twig configuration and extension
  * @param {object} extensions
  */
-function configureTwig({ functions = {}, filters = {} } = {}) {
+function configureTwig({functions = {}, filters = {}} = {}) {
   Twig.cache(false)
   Object.entries(filters).forEach(([key, fn]) => Twig.extendFilter(key, fn))
   Object.entries(functions).forEach(([key, fn]) => Twig.extendFunction(key, fn))
@@ -28,15 +28,20 @@ function configureTwig({ functions = {}, filters = {} } = {}) {
 
 /**
  * It handles the original html content parsing in order to retrieve the template details
- * @param {string} content 
- * @param {string} basePath 
+ * @param {string} content
+ * @param {string} basePath
  * @returns {object}
  */
 function parseHTML(content, basePath = '') {
   try {
-    const [_, specs] = content.match(/<script\b[^>]*>([\s\S]+)<\/script>/) || []
-    const { template, data } = JSON.parse(specs || content)
-    return { template: path.join(process.cwd(), basePath, template), data }
+    if (/<script\b[^>]*>([\s\S]+)<\/script>/gi.test(content)) {
+      const [_, specs] = content.match(/<script\b[^>]*>([\s\S]+)<\/script>/) || []
+      const {template, data} = JSON.parse(specs)
+      return {template: path.join(process.cwd(), basePath, template), data}
+    } else {
+      const {template, data} = JSON.parse(content)
+      return {template: path.join(process.cwd(), basePath, template), data}
+    }
   } catch (err) {
     console.warn(err)
     return {}
@@ -52,7 +57,7 @@ function parseHTML(content, basePath = '') {
  */
 function renderTemplate(template, context, settings) {
   return new Promise((resolve, reject) => {
-    Twig.renderFile(template, { ...context, settings }, (err, html) => {
+    Twig.renderFile(template, {...context, settings}, (err, html) => {
       if (err) {
         reject(err)
       } else {
