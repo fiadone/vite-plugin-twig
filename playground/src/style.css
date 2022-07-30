@@ -1,0 +1,14 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+.container {
+  max-width: 80rem;
+  padding: 0 1rem;
+  position: relative;
+  margin: 0 auto;
+}

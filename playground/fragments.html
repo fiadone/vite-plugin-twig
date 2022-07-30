@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="#" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite Twig App</title>
+  </head>
+  <body>
+    <main>
+      <div class="container">
+        <h1>Twig Fragments Page</h1>
+        <script type="application/json" data-template="templates/fragments/article.twig">
+          {
+            "title": "Article 1",
+            "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam fuga nostrum amet iste doloremque saepe eos ea maxime quisquam dolorem officiis expedita consequuntur harum provident vel, eaque architecto accusamus assumenda!"
+          }
+        </script>  
+        <script type="application/json" data-template="templates/fragments/article.twig">
+          {
+            "title": "Article 2",
+            "description": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Esse pariatur excepturi perferendis nemo repellendus sint aliquam? Qui cum corrupti, velit totam aliquam laudantium, minima amet neque dolores soluta cupiditate nulla!"
+          }
+        </script>
+      </div>
+    </main>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
