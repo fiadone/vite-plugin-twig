@@ -24,50 +24,94 @@ import twig from 'vite-plugin-twig'
 export default defineConfig({
   // ...
   plugins: [
-    twig()
+    twig({ /* ...options */ })
   ]
 })
 ```
 
 ### Options
-The plugin can be configured both via the *twig.config.js* file from the project root or by passing a configuration object directly as argument to the function above (in this last case, the configuration file will be ignored).
+The plugin can be configured both directly with the options parameter shown above or via the dedicated *twig.config.(js|ts)* file, like following:
+
+```js
+/* twig.config.js */
+import { defineConfig } from 'vite-plugin-twig'
+
+export default defineConfig({
+  // ...
+})
+```
+
+> ℹ️ *defineConfig* is a bypass function with type hints, which means you can also omit it if you don't need the autocompletion/typecheck.
 
 Here below the list of the supported options.
 
 #### `cache`
-__type__ `Boolean`
+__type:__ `boolean`
 
-__default__ `false`
+__default:__ `false`
 
 If *true*, it enables internal *Twig*'s template caching.
 
-#### `filters`
-__type__ `{ [key: String]: (...args: Any[]) => Any }`
+#### `extensions`
+__type:__ `{ filters: TwigExtensions, functions: TwigExtensions }`
 
-__default__ `{}`
+__default:__ `undefined`
 
-A collection of custom filters to extend *Twig*. Look at [*twig.js* documentation](https://github.com/twigjs/twig.js/wiki/Extending-twig.js) to learn more.
+A collection of custom filters and functions to extend *Twig*. Look at [*twig.js* documentation](https://github.com/twigjs/twig.js/wiki/Extending-twig.js) to learn more.
 
-#### `functions`
-__type__ `{ [key: String]: (...args: Any[]) => Any }`
+#### `fileFilter`
+__type:__ `(filename: string) => boolean`
 
-__default__ `{}`
+__default:__ `undefined`
 
-A collection of custom functions to extend *Twig*. Look at [*twig.js* documentation](https://github.com/twigjs/twig.js/wiki/Extending-twig.js) to learn more.
+A custom filter to determine if the current transforming *.html* file should be processed/ignored or not (useful for improving compatibility with other plugins).
+
+Example:
+```js
+/* twig.config.js */
+import { defineConfig } from 'vite-plugin-twig'
+
+export default defineConfig({
+  // ...
+  fileFilter: filename => filename.endsWith('.twig.html')
+})
+```
+
+#### `fragmentFilter`
+__type:__ `TwigFragmentFilter`
+
+__default:__ `undefined`
+
+A custom filter to determine if the current matched fragment should be processed/ignored or not (useful for improving compatibility with other plugins).
+
+Example:
+```js
+/* twig.config.js */
+import { defineConfig } from 'vite-plugin-twig'
+
+export default defineConfig({
+  // ...
+  fragmentFilter: (fragment, template, data) => {
+    return fragment.indexOf('data-engine="twig"') > -1
+    // or  template.endsWith('.twig')
+    // or  data.engine === 'twig'
+  }
+})
+```
 
 #### `globals`
-__type__ `{ [key: String]: Any }`
+__type:__ `{ [key: string]: any }`
 
-__default__ `{}`
+__default:__ `undefined`
 
 The global variables to be injected in each template.
 
 #### `settings`
-__type__ `{ [key: String]: Any }`
+__type:__ `{ views: any, 'twig options': any }`
 
-__default__ `{}`
+__default:__ `undefined`
 
-The *Twig* settings. Please refer to [*twig.js* documentation](https://github.com/twigjs/twig.js/wiki/) to learn more.
+The *Twig* settings. Please refer to *twig.js* [documentation](https://github.com/twigjs/twig.js/wiki/) and [types](https://github.com/DefinitelyTyped/DefinitelyTyped/blob/master/types/twig/index.d.ts) to learn more.
 
 
 ### Templates

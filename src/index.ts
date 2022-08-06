@@ -1,3 +1,3 @@
-import { viteTwigPlugin } from './plugin'
+export { defineConfig } from './config'
+export { viteTwigPlugin as default } from './plugin'
 
-export default viteTwigPlugin

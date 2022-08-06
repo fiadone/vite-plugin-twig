@@ -50,28 +50,52 @@ with this:
 ```
 
 
-### 3. [New feature] __Multiple *script* tags are now supported within the same *.html* file and can live together with standard *HTML* code.__
+### 3. [Breaking change] __*Twig*'s extensions are now wrapped in the *extensions* property within the configuration.__
 
-```html
-<html>
-  <body>
+Replace this:
+```js
+/* vite.config.js */
+import { defineConfig } from 'vite'
+import twig from 'vite-plugin-twig'
 
-    <!-- other html contents -->
-
-    <script type="application/json" data-template="path/to/fragment-a.twig">
-      {
-        "foo": "bar"
+export default defineConfig({
+  // ...
+  plugins: [
+    twig({
+      // ...
+      filters: {
+        // ...
+      },
+      functions: {
+        // ...
       }
-    </script>
+    })
+  ]
+})
+```
 
-    <!-- other html contents -->
+with this:
+```js
+/* vite.config.js */
+import { defineConfig } from 'vite'
+import twig from 'vite-plugin-twig'
 
-    <script type="application/json" data-template="path/to/fragment-b.twig"></script>
-
-    <!-- other html contents -->
-    
-  </body>
-</html>
+export default defineConfig({
+  // ...
+  plugins: [
+    twig({
+      // ...
+      extensions: {
+        filters: {
+          // ...
+        },
+        functions: {
+          // ...
+        }
+      }
+    })
+  ]
+})
 ```
 
 
@@ -93,11 +117,74 @@ export default defineConfig({
 })
 
 ```
-or
+
+
+### 5. [New option] __Via the *fileFilter* option, now the plugin provides a custom way to determine if the current transforming .html file should be processed/ignored or not__
+
 ```js
-/* twig.config.js */
-module.exports = {
+/* vite.config.js */
+import { defineConfig } from 'vite'
+import twig from 'vite-plugin-twig'
+
+export default defineConfig({
   // ...
-  cache: true
-}
+  plugins: [
+    twig({
+      // ...
+      fileFilter: filename => {
+        // your custom logic
+        return true // or false
+      }
+    })
+  ]
+})
+
+```
+
+
+### 6. [New option] __Via the *fragmentFilter* option, now the plugin provides a custom way to determine if a matched fragment should be processed/ignored or not__
+
+```js
+/* vite.config.js */
+import { defineConfig } from 'vite'
+import twig from 'vite-plugin-twig'
+
+export default defineConfig({
+  // ...
+  plugins: [
+    twig({
+      // ...
+      fragmentFilter: (fragment, template, data) => {
+        // your custom logic
+        return true // or false
+      }
+    })
+  ]
+})
+
+```
+
+
+### 7. [New feature] __Multiple *script* tags are now supported within the same *.html* file and can live together with standard *HTML* code.__
+
+```html
+<html>
+  <body>
+
+    <!-- other html contents -->
+
+    <script type="application/json" data-template="path/to/fragment-a.twig">
+      {
+        "foo": "bar"
+      }
+    </script>
+
+    <!-- other html contents -->
+
+    <script type="application/json" data-template="path/to/fragment-b.twig"></script>
+
+    <!-- other html contents -->
+    
+  </body>
+</html>
 ```
